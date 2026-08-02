@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fake News Detector</title>
+
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" href="../static/css/style.css" />
+  </head>
+  <body>
+    <!-- Template Container -->
+    <div class="app-container">
+      <!-- Header -->
+      <header class="app-header">
+        <div class="header-title-group">
+          <h1>📰 Fake News Detection System</h1>
+        </div>
+      </header>
+
+      <!-- Main Form Card -->
+      <main class="main-card">
+        <h2>Analyze News Article</h2>
+        <p>
+          Paste the headline or full text of the news article below to check its
+          authenticity.
+        </p>
+
+        <form id="news-form">
+          <div class="form-group">
+            <textarea
+              id="news-input"
+              rows="6"
+              placeholder="Paste news headline or content here..."
+              required
+            ></textarea>
+          </div>
+
+          <div class="counter-bar">
+            <span>Characters: <strong id="js-char-count">0</strong></span>
+            <span>Words: <strong id="js-word-count">0</strong></span>
+          </div>
+
+          <button type="submit" class="btn-primary">Check Authenticity</button>
+        </form>
+
+        <!-- Result Card Placeholder -->
+        <div id="result-container" class="result-card hidden">
+          <div class="result-header">
+            <div class="result-icon">✓</div>
+            <h3 class="result-title">Verdict</h3>
+          </div>
+          <p class="result-detail" id="result-detail-text"></p>
+        </div>
+      </main>
+    </div>
+
+    <!-- Client-side Script -->
+    <script src="../static/js/script.js"></script>
+  </body>
+</html>
