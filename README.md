@@ -5,7 +5,7 @@
 [![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange.svg)](https://jupyter.org/)
 [![Status](https://img.shields.io/badge/Status-In%20Development-yellow.svg)]()
 
-An Artificial Intelligence & Machine Learning project built for **BSc. CSIT 4th Semester (AI Subject)**. This system detects whether a news article is real or fake using Natural Language Processing (NLP) text preprocessing, TF-IDF feature extraction, and Classification Machine Learning algorithms.
+An Artificial Intelligence & Machine Learning project built for **BSc. CSIT 4th Semester (AI Subject)**. This system detects whether a news article is real or fake using Natural Language Processing (NLP) text preprocessing, TF-IDF feature extraction, and multiple machine learning classifiers. The project now also includes a Streamlit web interface for real-time prediction and result visualization.
 
 ---
 
@@ -35,15 +35,19 @@ The model is trained and evaluated using combined datasets:
 2. **Fake.csv**: Fake/fabricated news articles.
 3. **FA-KES-Dataset.csv**: Additional dataset of fake and real news for broader generalization.
 
+These datasets are merged and labeled to build a binary classification system for distinguishing between real and fake news content.
+
 ---
 
 ## 🛠️ Tech Stack & Libraries
 
 - **Programming Language**: Python
-- **Environment**: Jupyter Notebook
+- **Environment**: Jupyter Notebook + Streamlit Web App
 - **Data Handling**: `pandas`, `numpy`
 - **Text Processing / NLP**: `re` (Regular Expressions)
-- **Machine Learning**: `scikit-learn` (`TfidfVectorizer`, `LogisticRegression`, `train_test_split`, `classification_report`)
+- **Machine Learning**: `scikit-learn` (`TfidfVectorizer`, `LogisticRegression`, `DecisionTreeClassifier`, `RandomForestClassifier`, `GradientBoostingClassifier`, `train_test_split`, `classification_report`)
+- **Model Serialization**: `joblib`
+- **Web Interface**: `streamlit`
 
 ---
 
@@ -61,6 +65,9 @@ The model is trained and evaluated using combined datasets:
 5. **Model Training & Evaluation**:
    - Training classification models.
    - Evaluating performance using Accuracy Score, Precision, Recall, and F1-Score.
+6. **Web Application Deployment**:
+   - Loading the saved vectorizer and trained model in `app.py`.
+   - Accepting user input from the Streamlit interface and predicting the label in real time.
 
 ---
 
@@ -92,10 +99,15 @@ The model is trained and evaluated using combined datasets:
 
 3. **Install Dependencies**:
    ```bash
-   pip install pandas numpy scikit-learn jupyter
+   pip install -r requirements.txt
    ```
 
-4. **Run the Jupyter Notebook**:
+4. **Run the Streamlit Web App**:
+   ```bash
+   streamlit run app.py
+   ```
+
+5. **Optional**: Run the Jupyter Notebook for training and experimentation:
    ```bash
    jupyter notebook "Fake-news detection.ipynb"
    ```
@@ -105,10 +117,24 @@ The model is trained and evaluated using combined datasets:
 ## 📁 Project Structure
 
 ```
+├── app.py                      # Streamlit web application for live fake news classification
 ├── Fake-news detection.ipynb   # Main Jupyter notebook containing data preprocessing & model training
-├── FA-KES-Dataset.csv          # Secondary dataset of news articles
-├── Fake.csv                    # Dataset containing fake news samples
-├── True.csv                    # Dataset containing genuine news samples
+├── dataset/
+│   ├── FA-KES-Dataset.csv      # Secondary dataset of news articles
+│   ├── Fake.csv                # Dataset containing fake news samples
+│   └── True.csv                # Dataset containing genuine news samples
+├── model/
+│   ├── dtc_model.jb            # Decision Tree classifier
+│   ├── gbc_model.jb            # Gradient Boosting classifier
+│   ├── lr_model.jb             # Logistic Regression classifier
+│   ├── rfc_model.jb            # Random Forest classifier
+│   └── vectorizer.jb           # TF-IDF vectorizer used for preprocessing
+├── static/
+│   ├── css/
+│   └── js/
+├── templates/
+│   └── index.html
+├── requirements.txt            # Project dependencies
 ├── README.md                   # Project documentation
 └── .gitignore                  # Ignored files (e.g., venv, checkpoints)
 ```
@@ -120,8 +146,8 @@ The model is trained and evaluated using combined datasets:
 - [x] Data cleaning, preprocessing & regex normalization
 - [x] Feature extraction with TF-IDF Vectorizer
 - [x] Baseline Logistic Regression model (~98% accuracy)
-- [ ] Evaluate additional ML algorithms (Decision Tree, Random Forest, Naive Bayes, Passive Aggressive Classifier)
-- [ ] Develop an interactive Web Interface (Streamlit / Flask) for real-time news verification
+- [x] Evaluate additional ML algorithms (Decision Tree, Random Forest, Gradient Boosting)
+- [x] Develop an interactive Web Interface (Streamlit) for real-time news verification
 
 ---
 
