@@ -72,7 +72,7 @@ footer {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 1.75rem;
+  padding: 1.5rem 1.75rem;
   margin-bottom: 1.5rem;
   box-shadow: var(--shadow-sm);
   display: flex;
@@ -86,31 +86,8 @@ footer {
   font-size: 1.6rem;
   font-weight: 700;
   color: var(--text-main);
-  margin: 0 0 0.35rem 0;
-  letter-spacing: -0.02em;
-}
-
-.header-title-group p {
-  font-size: 0.9rem;
-  color: var(--text-muted);
   margin: 0;
-}
-
-.header-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.35rem;
-}
-
-.badge-tag {
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 0.3rem 0.65rem;
-  border-radius: var(--radius-sm);
-  background: var(--primary-blue-light);
-  color: var(--primary-blue);
-  border: 1px solid #bfdbfe;
+  letter-spacing: -0.02em;
 }
 
 /* --------------------------------------------------------------------------
@@ -123,28 +100,6 @@ footer {
   padding: 1.75rem;
   box-shadow: var(--shadow-md);
   margin-bottom: 1.5rem;
-}
-
-.card-heading {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-main);
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Sample news helper bar */
-.sample-bar {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.sample-label {
-  font-size: 0.8rem;
-  color: var(--text-muted);
 }
 
 /* Streamlit Textarea Customization */
@@ -166,7 +121,88 @@ footer {
 }
 
 /* --------------------------------------------------------------------------
-   5. Buttons Styling
+   5. Algorithm Selectbox Dropdown Styling (Force White Box + Dark Border & Text)
+   -------------------------------------------------------------------------- */
+/* Streamlit Selectbox Main Outer Frame */
+div[data-testid="stSelectbox"] div[data-baseweb="select"] {
+  background-color: #ffffff !important;
+  border: 1.5px solid #ffffff !important;
+  border-radius: var(--radius-md) !important;
+  min-height: 38px !important;
+  height: 38px !important;
+  box-shadow: none !important;
+}
+
+/* The real live combobox input in Streamlit's widget DOM */
+div[data-testid="stSelectbox"] input[role="combobox"] {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #ffffff !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
+}
+
+/* Selectbox Inner Container & Combobox */
+div[data-testid="stSelectbox"] div[data-baseweb="select"] > div,
+div[data-testid="stSelectbox"] div[role="combobox"] {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  min-height: 36px !important;
+  height: 36px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Text elements inside Selectbox */
+div[data-testid="stSelectbox"] div[data-baseweb="select"] * {
+  color: #000000 !important;
+  background-color: transparent !important;
+  font-weight: 600 !important;
+  font-size: 0.88rem !important;
+}
+
+/* Down Arrow Icon */
+div[data-testid="stSelectbox"] svg {
+  fill: #000000 !important;
+  color: #000000 !important;
+}
+
+/* Hover & Focus state */
+div[data-testid="stSelectbox"] div[data-baseweb="select"]:hover,
+div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
+  border-color: #000000 !important;
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.1) !important;
+}
+
+/* Dropdown Popup Menu List */
+ul[data-baseweb="menu"],
+ul[data-baseweb="menu"] li,
+ul[data-baseweb="menu"] li * {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Make the opened menu items stay white with black text */
+div[data-testid="stSelectbox"] [role="listbox"],
+div[data-testid="stSelectbox"] [role="option"] {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Keep the selected value in the closed control visible as black text */
+div[data-testid="stSelectbox"] .st-ae {
+  color: #000000 !important;
+}
+
+/* Extra fallback for the visible combobox button area */
+div[data-testid="stSelectbox"] button,
+div[data-testid="stSelectbox"] [role="button"] {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. Buttons Styling
    -------------------------------------------------------------------------- */
 .stButton > button {
   border-radius: var(--radius-md) !important;
@@ -192,7 +228,7 @@ footer {
 }
 
 /* --------------------------------------------------------------------------
-   6. Prediction Result Cards
+   7. Prediction Result Cards
    -------------------------------------------------------------------------- */
 .result-card {
   border-radius: var(--radius-lg);
@@ -253,18 +289,6 @@ footer {
   font-size: 0.9rem;
   margin-top: 0.5rem;
   opacity: 0.9;
-}
-
-/* --------------------------------------------------------------------------
-   7. Footer Section
-   -------------------------------------------------------------------------- */
-.app-footer {
-  text-align: center;
-  padding: 1.5rem 0 0.5rem 0;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  border-top: 1px solid var(--border-color);
-  margin-top: 2.5rem;
 }
 
 /* --------------------------------------------------------------------------

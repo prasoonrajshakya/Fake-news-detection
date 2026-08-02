@@ -6,15 +6,17 @@ import streamlit.components.v1 as components
 
 # Page Configuration
 st.set_page_config(
-    page_title="Fake News Detector | BSc. CSIT Project",
+    page_title="Fake News Detector",
     page_icon="📰",
     layout="centered",
     initial_sidebar_state="collapsed",
 )
 
 # Load CSS & JS Files (Separated Architecture)
-CSS_PATH = os.path.join("static", "css", "style.css")
-JS_PATH = os.path.join("static", "js", "script.js")
+BASE_DIR = os.path.dirname(__file__)
+MODEL_DIR = os.path.join(BASE_DIR, "model")
+CSS_PATH = os.path.join(BASE_DIR, "static", "css", "style.css")
+JS_PATH = os.path.join(BASE_DIR, "static", "js", "script.js")
 
 if os.path.exists(CSS_PATH):
     with open(CSS_PATH, "r", encoding="utf-8") as f:
@@ -24,20 +26,36 @@ if os.path.exists(JS_PATH):
     with open(JS_PATH, "r", encoding="utf-8") as f:
         components.html(f"<script>{f.read()}</script>", height=0, width=0)
 
+# Model Mapping Dictionary
+MODEL_FILES = {
+    "Logistic Regression": os.path.join(MODEL_DIR, "lr_model.jb"),
+    "Decision Tree": os.path.join(MODEL_DIR, "dtc_model.jb"),
+    "Gradient Boosting": os.path.join(MODEL_DIR, "gbc_model.jb"),
+    "Random Forest": os.path.join(MODEL_DIR, "rfc_model.jb"),
+}
 
-# Load Machine Learning Model & Vectorizer
+
+# Load Vectorizer once
 @st.cache_resource
-def load_ml_assets():
+def load_vectorizer():
     try:
-        vec = joblib.load("vectorizer.jb")
-        mdl = joblib.load("lr_model.jb")
-        return vec, mdl
+        return joblib.load(os.path.join(MODEL_DIR, "vectorizer.jb"))
     except Exception as e:
-        st.error(f"Error loading model assets: {e}")
-        return None, None
+        st.error(f"Error loading vectorizer: {e}")
+        return None
 
 
-vectorization, model = load_ml_assets()
+# Load Model dynamically based on selection
+@st.cache_resource
+def load_model(filename: str):
+    try:
+        return joblib.load(filename)
+    except Exception as e:
+        st.error(f"Error loading model ({filename}): {e}")
+        return None
+
+
+vectorization = load_vectorizer()
 
 
 # Text Preprocessing Function (Regex NLP Cleaning matching training pipeline)
@@ -68,11 +86,27 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Main Input Form Section
-st.markdown("### Analyze News Article")
+# Main Input Form Section Header Row: Title on Left, Small Algorithm Dropdown on Right
+col_title, col_algo = st.columns([1.6, 0.5], vertical_alignment="center")
+
+with col_title:
+    st.markdown("### Analyze News Article")
+
+with col_algo:
+    selected_algorithm = st.selectbox(
+        "Algorithm Selector",
+        options=list(MODEL_FILES.keys()),
+        index=0,
+        label_visibility="collapsed",
+        help="Select classification algorithm",
+    )
+
 st.markdown(
     "Paste the headline or full content of the news article below to check its authenticity."
 )
+
+# Load selected model
+model = load_model(MODEL_FILES[selected_algorithm])
 
 
 def clear_text():
@@ -125,7 +159,7 @@ if btn_predict:
     elif model is None or vectorization is None:
         st.error("Machine Learning model assets failed to load.")
     else:
-        with st.spinner("Analyzing text features and running classification model..."):
+        with st.spinner(f"Analyzing text features using {selected_algorithm}..."):
             # Preprocess & Vectorize
             cleaned_text = wordopt(user_input)
             if not cleaned_text:
@@ -153,7 +187,7 @@ if btn_predict:
                         <h2 class="result-title">Verdict: REAL NEWS</h2>
                     </div>
                     <p class="result-detail">
-                        The model classifies this news article as <strong>Genuine / Authentic</strong> with 
+                        The <strong>{selected_algorithm}</strong> model classifies this news article as <strong>Genuine / Authentic</strong> with 
                         <strong>{real_prob}%</strong> confidence probability.
                     </p>
                 </div>
@@ -169,7 +203,7 @@ if btn_predict:
                         <h2 class="result-title">Verdict: FAKE NEWS</h2>
                     </div>
                     <p class="result-detail">
-                        The model classifies this news article as <strong>Deceptive / Misinformation</strong> with 
+                        The <strong>{selected_algorithm}</strong> model classifies this news article as <strong>Deceptive / Misinformation</strong> with 
                         <strong>{fake_prob}%</strong> confidence probability.
                     </p>
                 </div>
@@ -179,7 +213,7 @@ if btn_predict:
 
             # Detailed metrics breakdown
             with st.expander(
-                "📊 View Detailed Probability Breakdown & Preprocessed Text"
+                f"📊 View Detailed Breakdown ({selected_algorithm}) & Preprocessed Text"
             ):
                 st.progress(
                     real_prob / 100.0, text=f"Real News Probability: {real_prob}%"
