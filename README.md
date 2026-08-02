@@ -3,9 +3,11 @@
 [![Python](https://img.shields.io/badge/Python-3.x-blue.svg)](https://www.python.org/)
 [![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Machine%20Learning-F7931E.svg)](https://scikit-learn.org/)
 [![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange.svg)](https://jupyter.org/)
-[![Status](https://img.shields.io/badge/Status-In%20Development-yellow.svg)]()
+[![Status](https://img.shields.io/badge/Status-Completed-success.svg)]()
 
 An Artificial Intelligence & Machine Learning project built for **BSc. CSIT 4th Semester (AI Subject)**. This system detects whether a news article is real or fake using Natural Language Processing (NLP) text preprocessing, TF-IDF feature extraction, and multiple machine learning classifiers. The project now also includes a Streamlit web interface for real-time prediction and result visualization.
+
+Live Demo: https://verify-news.streamlit.app
 
 ---
 
