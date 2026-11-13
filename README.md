@@ -155,4 +155,4 @@ These datasets are merged and labeled to build a binary classification system fo
 
 ## 👤 Author
 
-Developed by **[@ignotus-8](https://github.com/ignotus-8)** for BSc. CSIT 4th Semester (AI Subject).
+Developed by **[prasoonrajshakya](https://github.com/prasoonrajshakya)** for BSc. CSIT 4th Semester (AI Subject).
